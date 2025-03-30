@@ -33,7 +33,6 @@ class HomeViewModel() : ViewModel() {
 
     init {
         fetchAnimalList()
-        selectCategory("All")
     }
 
     fun getCategoryList() = viewModelScope.launch {
@@ -67,7 +66,7 @@ class HomeViewModel() : ViewModel() {
                 val animalList = Ktor.client.getAnimalList()
                 myAnimalList = animalList
                 getCategoryList()
-                _uiState.emit(HomeUiState.Success(myAnimalList))
+                selectCategory("All")
             } catch (e: Exception) {
                 _uiState.emit(HomeUiState.Error(errorMessage = e.message ?: ""))
             }
