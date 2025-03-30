@@ -9,12 +9,11 @@ import petshelterap.composeapp.generated.resources.cat3
 data class Category(
     val image: DrawableResource,
     val name: String
-) {
+){
     companion object {
-        val categoryList = listOf(
-            Category(image = Res.drawable.cat1, "All"),
-            Category(image = Res.drawable.cat2, "Cat"),
-            Category(image = Res.drawable.cat3, "Dog"),
-        )
+        val categoryImagesList = listOf(Res.drawable.cat1, Res.drawable.cat2, Res.drawable.cat3)
+        fun MutableList<Category?>.addAllSectionForCategoryList(){
+            this.add(0, Category(name = "All", image = Res.drawable.cat3))
+        }
     }
 }
