@@ -44,6 +44,11 @@ fun SplashScreen(
         navigate()
     }
 
+    SplashScreenUI()
+}
+
+@Composable
+private fun SplashScreenUI() {
     Box(Modifier.fillMaxSize()) {
         Image(
             painter = painterResource(Res.drawable.app_background),

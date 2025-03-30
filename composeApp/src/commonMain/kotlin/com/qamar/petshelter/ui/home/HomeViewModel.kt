@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.qamar.petshelter.data.model.Animal
 import com.qamar.petshelter.data.model.AnimalModel
 import com.qamar.petshelter.data.model.Category
+import com.qamar.petshelter.data.model.Category.Companion.addAllSectionForCategoryList
 import com.qamar.petshelter.data.remote.Ktor
 import com.qamar.petshelter.data.remote.Ktor.getAnimalList
 import com.qamar.petshelter.ui.home.state.HomeUiState
@@ -18,13 +19,11 @@ import petshelterap.composeapp.generated.resources.cat1
 import petshelterap.composeapp.generated.resources.cat2
 import petshelterap.composeapp.generated.resources.cat3
 
-class HomeViewModel() : ViewModel() {
+class HomeViewModel : ViewModel() {
 
     private val _categoriesState: MutableStateFlow<List<Category?>?> = MutableStateFlow(null)
     val categoriesState: StateFlow<List<Category?>?> = _categoriesState.asStateFlow()
     var selectedItem = mutableStateOf("All")
-    private val _animalState: MutableStateFlow<List<Animal>?> = MutableStateFlow(null)
-    val animalState: StateFlow<List<Animal>?> = _animalState.asStateFlow()
 
     private val _uiState: MutableStateFlow<HomeUiState> = MutableStateFlow(HomeUiState.Loading)
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
@@ -35,14 +34,13 @@ class HomeViewModel() : ViewModel() {
         fetchAnimalList()
     }
 
-    fun getCategoryList() = viewModelScope.launch {
-        val categoryImagesList = listOf(Res.drawable.cat1, Res.drawable.cat2, Res.drawable.cat3)
+    private fun getCategoryList() = viewModelScope.launch {
         val categoryList = myAnimalList.distinctBy { it.placeOfFound }.map {
             it.placeOfFound?.let { placeOfFound ->
-                Category(name = placeOfFound, image = categoryImagesList.random())
+                Category(name = placeOfFound, image = Category.categoryImagesList.random())
             }
         }.toMutableList()
-        categoryList.add(0, Category(name = "All", image = Res.drawable.cat3))
+        categoryList.addAllSectionForCategoryList()
         _categoriesState.emit(categoryList)
     }
 

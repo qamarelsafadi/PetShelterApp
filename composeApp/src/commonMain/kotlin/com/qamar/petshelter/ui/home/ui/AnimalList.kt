@@ -44,6 +44,7 @@ import io.kamel.core.ExperimentalKamelApi
 import io.kamel.image.KamelImage
 import io.kamel.image.KamelImageBox
 import io.kamel.image.asyncPainterResource
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import petshelterap.composeapp.generated.resources.Res
 import petshelterap.composeapp.generated.resources.animal1
@@ -124,7 +125,6 @@ fun AnimalInfo(animal: AnimalModel) {
     }
 }
 
-@OptIn(ExperimentalKamelApi::class)
 @Composable
 fun AnimalImage(animal: AnimalModel) {
     var iconValue by remember {
@@ -137,10 +137,10 @@ fun AnimalImage(animal: AnimalModel) {
             .height(116.dp)
     ) {
         KamelImage(
-           resource =  { asyncPainterResource(animal.image ?: "") },
+            resource = { asyncPainterResource(animal.image ?: "") },
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
-            onFailure = { throw it },
+            onFailure = { println(it) },
             contentScale = ContentScale.Crop
         )
         Icon(
@@ -152,15 +152,16 @@ fun AnimalImage(animal: AnimalModel) {
                 .padding(5.dp)
                 .align(Alignment.TopEnd)
                 .clickable {
-                    iconValue = if (iconValue == Res.drawable.star_default)
-                        Res.drawable.star
-                    else Res.drawable.star_default
+                    iconValue = iconValue.getStarIcon()
                 },
             contentDescription = "Star",
             tint = Color.Unspecified
         )
     }
-
 }
 
+private fun DrawableResource.getStarIcon() =
+    if (this == Res.drawable.star_default)
+        Res.drawable.star
+    else Res.drawable.star_default
 
