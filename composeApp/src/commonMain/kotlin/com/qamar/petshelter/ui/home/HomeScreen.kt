@@ -69,6 +69,7 @@ private fun HomeScreenUi(
         Modifier.fillMaxSize()
             .background(Color.White)
             .statusBarsPadding()
+            .padding(top = 16.dp)
             .padding(horizontal = 16.dp)
     ) {
         HeaderSection()
