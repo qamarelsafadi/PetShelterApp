@@ -60,6 +60,7 @@ kotlin {
             implementation(libs.kamel)
 
             implementation(libs.coil.compose)
+            implementation(libs.coil.network)
 
         }
     }

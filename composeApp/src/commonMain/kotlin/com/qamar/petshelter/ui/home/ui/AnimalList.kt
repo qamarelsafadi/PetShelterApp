@@ -136,11 +136,10 @@ fun AnimalImage(animal: AnimalModel) {
         Modifier.fillMaxWidth()
             .height(116.dp)
     ) {
-        KamelImage(
-           resource =  { asyncPainterResource(animal.image ?: "") },
+        AsyncImage(
+            model = animal.image ?: "",
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
-            onFailure = { throw it },
             contentScale = ContentScale.Crop
         )
         Icon(
